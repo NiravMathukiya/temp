@@ -87,47 +87,59 @@ export default function NewRequestPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
-        <div className=" p-4 bg-white flex items-center justify-between">
-          <div className="flex-1  flex justify-start lg:ml-10 ">
-            <div className="border  border-gray-300 p-6 bg-white rounded-xl">
-              <h2 className="text-sm  md:text-xl font-light  text-black">ISMAILI COUNCIL FOR</h2>
-              <h2 className="text-sm  font-light text-black">THE SOUTHWESTERN USA</h2>
+        <div className="p-4 bg-white flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+          {/* Left Section - Logo */}
+          <div className="flex-1 flex justify-start lg:ml-10">
+            <div className="border border-gray-300 p-4 md:p-6 bg-white rounded-xl text-center">
+              <h2 className="text-xs sm:text-sm md:text-xl font-light text-black">ISMAILI COUNCIL FOR</h2>
+              <h2 className="text-xs sm:text-sm font-light text-black">THE SOUTHWESTERN USA</h2>
             </div>
           </div>
-          <div className="flex-1">
-            <h2 className="text-lg md:text-2xl   font-bold text-[#005c34]">REGIONAL COMMUNICATION PORTAL</h2>
-            <p className="text-sm md:text-lg ">Communication Request Form</p>
+
+          {/* Center Section - Title */}
+          <div className="flex-1 text-center lg:text-left">
+            <h2 className="text-base sm:text-lg md:text-2xl font-bold text-[#005c34]">REGIONAL COMMUNICATION PORTAL</h2>
+            <p className="text-xs sm:text-sm md:text-lg">Communication Request Form</p>
           </div>
-          <div className="flex-1 flex justify-end w-screen">
-            <div className="flex items-center justify-end border  border-black">
-              <div className="bg-green-500 text-white py-2 px-4 rounded-full flex items-center">
+
+          {/* Right Section - Login Success */}
+          <div className="flex-1 flex justify-end w-full lg:w-auto">
+            <div className="flex items-center justify-end border border-black">
+              <div className="bg-green-500 text-white py-2 px-4 rounded-full flex items-center text-sm sm:text-base">
                 <Check size={18} className="mr-2" />
                 <span>Login Successful!</span>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-white p-4 flex items-center lg:ml-10">
-          <div className="w-12 h-12 rounded-full bg-[#B49959] flex items-center justify-center text-white font-bold mr-4">
-            AI
+
+        {/* Profile Section */}
+        <div className="bg-white p-4 flex flex-col lg:flex-row items-start lg:items-center lg:ml-10 gap-4">
+          <div className="flex items-center">
+            <div className="w-12 h-12 rounded-full bg-[#B49959] flex items-center justify-center text-white font-bold mr-4">
+              AI
+            </div>
+            <div>
+              <h3 className="font-bold text-base sm:text-lg">Aminul Islam</h3>
+              <button className="text-gray-500 text-sm">Edit Profile</button>
+            </div>
           </div>
-          <div>
-            <h3 className="font-bold text-lg">Aminul Islam</h3>
-            <button className="text-gray-500 text-sm">Edit Profile</button>
-          </div>
-          <div className="ml-auto flex gap-4">
-            <button className="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-3xl">
+
+          {/* Navigation Buttons */}
+          <div className="ml-auto flex flex-wrap gap-2 lg:gap-4 w-full lg:w-auto justify-start lg:justify-end">
+            <button className="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-3xl text-sm sm:text-base">
               Communications
             </button>
-            <button className="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-3xl">
+            <button className="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-3xl text-sm sm:text-base">
               Dashboard
             </button>
-            <button className="bg-[#B49959] text-white py-2 px-4 rounded-3xl">
+            <button className="bg-[#B49959] text-white py-2 px-4 rounded-3xl text-sm sm:text-base">
               Log Out
             </button>
           </div>
         </div>
       </header>
+
 
       <main className="container mx-auto rounded-2xl py-8 px-4">
         <div className="bg-gray-200  rounded-2xl mb-8">
@@ -227,325 +239,325 @@ export default function NewRequestPage() {
           </div>
 
           <div className="bg-white p-6 rounded shadow grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className='col-span-2'>
-              <div>
-                <label htmlFor="portfolioMember" className="block text-sm font-medium text-gray-700 mb-1">
-                  Portfolio/ Board/Member
-                </label>
+
+            <div>
+              <label htmlFor="portfolioMember" className="block text-sm font-medium text-gray-700 mb-1">
+                Portfolio/ Board/Member
+              </label>
+              <input
+                type="text"
+                id="portfolioMember"
+                className={`w-full p-2 border rounded ${errors.portfolioMember ? 'border-red-500' : 'border-gray-300'}`}
+                {...register('portfolioMember', { required: 'This field is required' })}
+              />
+              {errors.portfolioMember && (
+                <p className="text-red-500 text-xs mt-1">{errors.portfolioMember.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="submittedBy" className="block text-sm font-medium text-gray-700 mb-1">
+                Submitted By
+              </label>
+              <input
+                type="text"
+                id="submittedBy"
+                className={`w-full p-2 border rounded ${errors.submittedBy ? 'border-red-500' : 'border-gray-300'}`}
+                {...register('submittedBy', { required: 'This field is required' })}
+              />
+              {errors.submittedBy && (
+                <p className="text-red-500 text-xs mt-1">{errors.submittedBy.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                Phone Number
+              </label>
+              <div className="flex">
+                <select
+                  className="p-2 border border-gray-300 rounded-l"
+                  {...register('phonePrefix')}
+                >
+                  <option value="US">US +1</option>
+                  <option value="GB">GB +44</option>
+                  <option value="DE">DE +49</option>
+                </select>
                 <input
                   type="text"
-                  id="portfolioMember"
-                  className={`w-full p-2 border rounded ${errors.portfolioMember ? 'border-red-500' : 'border-gray-300'}`}
-                  {...register('portfolioMember', { required: 'This field is required' })}
-                />
-                {errors.portfolioMember && (
-                  <p className="text-red-500 text-xs mt-1">{errors.portfolioMember.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="submittedBy" className="block text-sm font-medium text-gray-700 mb-1">
-                  Submitted By
-                </label>
-                <input
-                  type="text"
-                  id="submittedBy"
-                  className={`w-full p-2 border rounded ${errors.submittedBy ? 'border-red-500' : 'border-gray-300'}`}
-                  {...register('submittedBy', { required: 'This field is required' })}
-                />
-                {errors.submittedBy && (
-                  <p className="text-red-500 text-xs mt-1">{errors.submittedBy.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone Number
-                </label>
-                <div className="flex">
-                  <select
-                    className="p-2 border border-gray-300 rounded-l"
-                    {...register('phonePrefix')}
-                  >
-                    <option value="US">US +1</option>
-                    <option value="GB">GB +44</option>
-                    <option value="DE">DE +49</option>
-                  </select>
-                  <input
-                    type="text"
-                    id="phoneNumber"
-                    className={`flex-1 p-2 border-t border-b border-r rounded-r ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'}`}
-                    {...register('phoneNumber', {
-                      required: 'Phone number is required',
-                      pattern: {
-                        value: /^[0-9]{10}$/,
-                        message: 'Please enter a valid 10-digit phone number'
-                      }
-                    })}
-                  />
-                </div>
-                {errors.phoneNumber && (
-                  <p className="text-red-500 text-xs mt-1">{errors.phoneNumber.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className={`w-full p-2 border rounded ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-                  {...register('email', {
-                    required: 'Email is required',
+                  id="phoneNumber"
+                  className={`flex-1 p-2 border-t border-b border-r rounded-r ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'}`}
+                  {...register('phoneNumber', {
+                    required: 'Phone number is required',
                     pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Please enter a valid email address'
+                      value: /^[0-9]{10}$/,
+                      message: 'Please enter a valid 10-digit phone number'
                     }
                   })}
                 />
-                {errors.email && (
-                  <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
-                )}
               </div>
-
-              <div>
-                <label htmlFor="programName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Name of Program
-                </label>
-                <input
-                  type="text"
-                  id="programName"
-                  className={`w-full p-2 border rounded ${errors.programName ? 'border-red-500' : 'border-gray-300'}`}
-                  {...register('programName', { required: 'Program name is required' })}
-                />
-                {errors.programName && (
-                  <p className="text-red-500 text-xs mt-1">{errors.programName.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="programLocation" className="block text-sm font-medium text-gray-700 mb-1">
-                  Location of Program
-                </label>
-                <input
-                  type="text"
-                  id="programLocation"
-                  className={`w-full p-2 border rounded ${errors.programLocation ? 'border-red-500' : 'border-gray-300'}`}
-                  {...register('programLocation', { required: 'Program location is required' })}
-                />
-                {errors.programLocation && (
-                  <p className="text-red-500 text-xs mt-1">{errors.programLocation.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="programDate" className="block text-sm font-medium text-gray-700 mb-1">
-                  Date of Program
-                </label>
-                <div className="flex items-center">
-                  <input
-                    type="date"
-                    id="programDate"
-                    className={`w-full p-2 border rounded ${errors.programDate ? 'border-red-500' : 'border-gray-300'}`}
-                    {...register('programDate', { required: 'Program date is required' })}
-                  />
-                  <div className="ml-2 flex items-center">
-                    <input
-                      type="checkbox"
-                      id="noProgramDate"
-                      className="mr-1"
-                      {...register('noProgramDate')}
-                    />
-                    <label htmlFor="noProgramDate" className="text-sm">N/A</label>
-                  </div>
-                </div>
-                {errors.programDate && (
-                  <p className="text-red-500 text-xs mt-1">{errors.programDate.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Time of Program
-                </label>
-                <div className="flex items-center space-x-2">
-                  <select
-                    className="p-2 border border-gray-300 rounded"
-                    {...register('programTimeHour')}
-                  >
-                    {[...Array(12)].map((_, i) => (
-                      <option key={i} value={String(i + 1).padStart(2, '0')}>
-                        {String(i + 1).padStart(2, '0')}
-                      </option>
-                    ))}
-                  </select>
-                  <span>:</span>
-                  <select
-                    className="p-2 border border-gray-300 rounded"
-                    {...register('programTimeMinute')}
-                  >
-                    {[...Array(60)].map((_, i) => (
-                      <option key={i} value={String(i).padStart(2, '0')}>
-                        {String(i).padStart(2, '0')}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    className="p-2 border border-gray-300 rounded"
-                    {...register('programTimeAmPm')}
-                  >
-                    <option value="AM">AM</option>
-                    <option value="PM">PM</option>
-                  </select>
-                  <div className="flex items-center ml-2">
-                    <input
-                      type="checkbox"
-                      id="noProgramTime"
-                      className="mr-1"
-                      {...register('noProgramTime')}
-                    />
-                    <label htmlFor="noProgramTime" className="text-sm">N/A</label>
-                  </div>
-                </div>
-              </div>
-
+              {errors.phoneNumber && (
+                <p className="text-red-500 text-xs mt-1">{errors.phoneNumber.message}</p>
+              )}
             </div>
+
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Program Venue
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email
               </label>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                {Object.keys(programVenue).map((venue) => (
-                  <div key={venue} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={venue}
-                      className="mr-2"
-                      checked={programVenue[venue]}
-                      onChange={() => {
-                        setProgramVenue((prev) => ({
-                          ...prev,
-                          [venue]: !prev[venue],
-                        }));
-                      }}
-                    />
-                    <label htmlFor={venue}>{venue.replace(/([A-Z])/g, ' $1').toUpperCase()}</label>
-                  </div>
-                ))}
-
-                {customVenues.map((venue, index) => (
-                  <div key={`custom-${index}`} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`venueCustom${index}`}
-                      className="mr-2"
-                      onChange={() => { }}
-                    />
-                    <label htmlFor={`venueCustom${index}`}>{venue}</label>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex items-center mt-2">
-                {showInput && (
-                  <input
-                    type="text"
-                    value={newVenue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleAddVenue}
-                    placeholder="Enter custom venue"
-                    className="border p-1 rounded ml-2"
-                  />
-                )}
-                <span
-                  className="text-sm text-gray-500 mr-2 cursor-pointer"
-                  onClick={() => setShowInput(true)} // Show input when clicked
-                >
-                  + Add Other
-                </span>
-              </div>
+              <input
+                type="email"
+                id="email"
+                className={`w-full p-2 border rounded ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Please enter a valid email address'
+                  }
+                })}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+              )}
             </div>
 
-            <div className="md:col-span-2">
-              <div className="flex items-center justify-between">
-                <label htmlFor="attendeesNumber" className="block text-sm font-medium text-gray-700">
-                  Projected Number of Attendees
-                </label>
-                <div className="flex items-center">
+            <div>
+              <label htmlFor="programName" className="block text-sm font-medium text-gray-700 mb-1">
+                Name of Program
+              </label>
+              <input
+                type="text"
+                id="programName"
+                className={`w-full p-2 border rounded ${errors.programName ? 'border-red-500' : 'border-gray-300'}`}
+                {...register('programName', { required: 'Program name is required' })}
+              />
+              {errors.programName && (
+                <p className="text-red-500 text-xs mt-1">{errors.programName.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="programLocation" className="block text-sm font-medium text-gray-700 mb-1">
+                Location of Program
+              </label>
+              <input
+                type="text"
+                id="programLocation"
+                className={`w-full p-2 border rounded ${errors.programLocation ? 'border-red-500' : 'border-gray-300'}`}
+                {...register('programLocation', { required: 'Program location is required' })}
+              />
+              {errors.programLocation && (
+                <p className="text-red-500 text-xs mt-1">{errors.programLocation.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="programDate" className="block text-sm font-medium text-gray-700 mb-1">
+                Date of Program
+              </label>
+              <div className="flex items-center">
+                <input
+                  type="date"
+                  id="programDate"
+                  className={`w-full p-2 border rounded ${errors.programDate ? 'border-red-500' : 'border-gray-300'}`}
+                  {...register('programDate', { required: 'Program date is required' })}
+                />
+                <div className="ml-2 flex items-center">
                   <input
                     type="checkbox"
-                    id="noAttendeesNumber"
+                    id="noProgramDate"
                     className="mr-1"
-                    {...register('noAttendeesNumber')}
+                    {...register('noProgramDate')}
                   />
-                  <label htmlFor="noAttendeesNumber" className="text-sm">N/A</label>
+                  <label htmlFor="noProgramDate" className="text-sm">N/A</label>
                 </div>
               </div>
-              <input
-                type="number"
-                id="attendeesNumber"
-                className="w-full p-2 border border-gray-300 rounded mt-1"
-                {...register('attendeesNumber')}
-              />
+              {errors.programDate && (
+                <p className="text-red-500 text-xs mt-1">{errors.programDate.message}</p>
+              )}
             </div>
 
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Does this program require registration?
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Time of Program
               </label>
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center">
+              <div className="flex items-center space-x-2">
+                <select
+                  className="p-2 border border-gray-300 rounded"
+                  {...register('programTimeHour')}
+                >
+                  {[...Array(12)].map((_, i) => (
+                    <option key={i} value={String(i + 1).padStart(2, '0')}>
+                      {String(i + 1).padStart(2, '0')}
+                    </option>
+                  ))}
+                </select>
+                <span>:</span>
+                <select
+                  className="p-2 border border-gray-300 rounded"
+                  {...register('programTimeMinute')}
+                >
+                  {[...Array(60)].map((_, i) => (
+                    <option key={i} value={String(i).padStart(2, '0')}>
+                      {String(i).padStart(2, '0')}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  className="p-2 border border-gray-300 rounded"
+                  {...register('programTimeAmPm')}
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+                <div className="flex items-center ml-2">
                   <input
-                    type="radio"
-                    id="registrationYes"
-                    value="yes"
-                    className="mr-2"
-                    {...register('requiresRegistration')}
+                    type="checkbox"
+                    id="noProgramTime"
+                    className="mr-1"
+                    {...register('noProgramTime')}
                   />
-                  <label htmlFor="registrationYes">Yes</label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="registrationNo"
-                    value="no"
-                    className="mr-2"
-                    {...register('requiresRegistration')}
-                  />
-                  <label htmlFor="registrationNo">No</label>
+                  <label htmlFor="noProgramTime" className="text-sm">N/A</label>
                 </div>
               </div>
             </div>
 
-            <div className="md:col-span-2">
-              <div className="flex items-center justify-between">
-                <label className="block text-sm font-medium text-gray-700">
-                  Please provide flyer with the announcement. Flyer must be made from one of the templates provided in size 1080x1080 (if applicable)
-                </label>
-                <span className="text-sm text-gray-500">Max: 5</span>
-              </div>
-              <div
-                className="border-2 border-dashed border-gray-300 rounded-md p-6 mt-2 flex flex-col items-center justify-center"
-                onDrop={handleFileDrop}
-                onDragOver={(e) => e.preventDefault()}
-              >
-                <p className="text-sm text-gray-500">Drag your files here or</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Program Venue
+            </label>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+              {Object.keys(programVenue).map((venue) => (
+                <div key={venue} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={venue}
+                    className="mr-2"
+                    checked={programVenue[venue]}
+                    onChange={() => {
+                      setProgramVenue((prev) => ({
+                        ...prev,
+                        [venue]: !prev[venue],
+                      }));
+                    }}
+                  />
+                  <label htmlFor={venue}>{venue.replace(/([A-Z])/g, ' $1').toUpperCase()}</label>
+                </div>
+              ))}
+
+              {customVenues.map((venue, index) => (
+                <div key={`custom-${index}`} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={`venueCustom${index}`}
+                    className="mr-2"
+                    onChange={() => { }}
+                  />
+                  <label htmlFor={`venueCustom${index}`}>{venue}</label>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center mt-2">
+              {showInput && (
                 <input
-                  type="file"
-                  multiple
-                  onChange={handleFileSelect}
-                  className="hidden"
-                  id="fileUpload"
+                  type="text"
+                  value={newVenue}
+                  onChange={handleInputChange}
+                  onKeyDown={handleAddVenue}
+                  placeholder="Enter custom venue"
+                  className="border p-1 rounded ml-2"
                 />
-                <label htmlFor="fileUpload" className="text-blue-500 hover:underline cursor-pointer">
-                  browse
-                </label>
-                <p className="text-xs text-gray-400 mt-1">(JPG, PNG, PDF)</p>
+              )}
+              <span
+                className="text-sm text-gray-500 mr-2 cursor-pointer"
+                onClick={() => setShowInput(true)} // Show input when clicked
+              >
+                + Add Other
+              </span>
+            </div>
+          </div>
+
+          <div className="md:col-span-2">
+            <div className="flex items-center justify-between">
+              <label htmlFor="attendeesNumber" className="block text-sm font-medium text-gray-700">
+                Projected Number of Attendees
+              </label>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="noAttendeesNumber"
+                  className="mr-1"
+                  {...register('noAttendeesNumber')}
+                />
+                <label htmlFor="noAttendeesNumber" className="text-sm">N/A</label>
+              </div>
+            </div>
+            <input
+              type="number"
+              id="attendeesNumber"
+              className="w-full p-2 border border-gray-300 rounded mt-1"
+              {...register('attendeesNumber')}
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Does this program require registration?
+            </label>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="registrationYes"
+                  value="yes"
+                  className="mr-2"
+                  {...register('requiresRegistration')}
+                />
+                <label htmlFor="registrationYes">Yes</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="registrationNo"
+                  value="no"
+                  className="mr-2"
+                  {...register('requiresRegistration')}
+                />
+                <label htmlFor="registrationNo">No</label>
               </div>
             </div>
           </div>
+
+          <div className="md:col-span-2">
+            <div className="flex items-center justify-between">
+              <label className="block text-sm font-medium text-gray-700">
+                Please provide flyer with the announcement. Flyer must be made from one of the templates provided in size 1080x1080 (if applicable)
+              </label>
+              <span className="text-sm text-gray-500">Max: 5</span>
+            </div>
+            <div
+              className="border-2 border-dashed border-gray-300 rounded-md p-6 mt-2 flex flex-col items-center justify-center"
+              onDrop={handleFileDrop}
+              onDragOver={(e) => e.preventDefault()}
+            >
+              <p className="text-sm text-gray-500">Drag your files here or</p>
+              <input
+                type="file"
+                multiple
+                onChange={handleFileSelect}
+                className="hidden"
+                id="fileUpload"
+              />
+              <label htmlFor="fileUpload" className="text-blue-500 hover:underline cursor-pointer">
+                browse
+              </label>
+              <p className="text-xs text-gray-400 mt-1">(JPG, PNG, PDF)</p>
+            </div>
+          </div>
+
 
 
 
