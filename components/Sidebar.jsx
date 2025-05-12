@@ -2,33 +2,63 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { 
-  Users, FileText, List, User, BarChart, Book, 
-  Calendar, Coffee, ChevronDown, Mail
-} from 'lucide-react';
+import * as Icons from 'lucide-react';
+import { useSelector } from 'react-redux';
+
+const sidebarData = [
+  {
+    title: 'Communications Request',
+    icon: 'Mail',
+    items: [
+      { name: 'Jamati Announcements', path: '/announcements' },
+      { name: 'Communication Request Submissions', path: '/announcements' },
+      { name: 'Communication Request Subscribers', path: '/subscribers' },
+      { name: 'Ismaili Insight', path: '/insight' },
+      { name: 'Social Media', path: '/social-media' },
+    ]
+  },
+  {
+    title: 'Graphics Request (1)',
+    icon: 'BarChart',
+    items: [
+      { name: 'Graphics Request Submissions (1)', path: '/graphics-request' }
+    ]
+  },
+  {
+    title: 'Bookings',
+    icon: 'Calendar',
+    items: [
+      { name: 'Bookings', path: '/bookings' },
+      { name: 'Pending Bookings', path: '/pending-bookings' },
+      { name: 'Booking Comments (15)', path: '/booking-comments' },
+      { name: 'Double Bookings', path: '/double-bookings' },
+      { name: 'Booking Subscribers', path: '/booking-subscribers' },
+    ]
+  },
+  {
+    title: 'Food Support',
+    icon: 'Coffee',
+    items: [
+      { name: 'Food Support Dashboard', path: '/food-dashboard' },
+      { name: 'Food Support Subscribers', path: '/food-subscribers' }
+    ]
+  },
+];
 
 export default function Sidebar({ activeItem, setActiveItem }) {
-  const [openMenus, setOpenMenus] = useState({
-    'communications': true,
-    'graphics': false,
-    'bookings': false,
-    'food': false,
-  });
+  const isOpen = useSelector((state) => state.sidebar.isOpen);
+  const [activeMenu, setActiveMenu] = useState(null);
 
-  const toggleMenu = (menu) => {
-    setOpenMenus(prev => ({
-      ...prev,
-      [menu]: !prev[menu]
-    }));
+
+
+  const toggleMenu = (index) => {
+    setActiveMenu(prev => (prev === index ? null : index));
   };
 
+  if (!isOpen) return null;
+
   return (
-    <aside className="sidebar w-64 flex-shrink-0">
-      <div className="logo-container p-4 border-b border-slate-700">
-        <h2 className="text-sm font-semibold">ISMAILI COUNCIL FOR</h2>
-        <h2 className="text-sm font-semibold">THE SOUTHWESTERN USA</h2>
-      </div>
-      
+    <aside className="sidebar w-64 bg-white shadow-md">
       <div className="p-4 border-b border-slate-700">
         <h3 className="text-gray-300">Karishma Sharif</h3>
         <div className="flex items-center mt-1">
@@ -36,120 +66,45 @@ export default function Sidebar({ activeItem, setActiveItem }) {
           <span className="text-xs text-gray-400">Master Admin</span>
         </div>
       </div>
-      
-      <nav className="p-2">
-       
-        
-        <div 
-          className={`sidebar-item ${openMenus.communications ? 'active' : ''}`}
-          onClick={() => toggleMenu('communications')}
-        >
-          <Mail size={18} />
-          <span className="flex-1">Communications Request</span>
-          <ChevronDown size={16} className={`transform transition-transform ${openMenus.communications ? 'rotate-180' : ''}`} />
-        </div>
-        
-        {openMenus.communications && (
-          <div className="pl-8">
-            <Link href="/announcements">
-              <div className={`sidebar-item ${activeItem === 'jamati-announcements' ? 'active' : ''}`}>
-                <span>Jamati Announcements</span>
+
+      <nav className="p-2 space-y-1">
+        {sidebarData.map((section, index) => {
+          const Icon = Icons[section.icon] || Icons.List;
+          const isOpen = activeMenu === index;
+
+          return (
+            <div key={index}>
+              <div
+                className={`sidebar-item flex items-center justify-between cursor-pointer px-4 py-2  ${isOpen ? '' : ''}`}
+                onClick={() => toggleMenu(index)}
+              >
+                <div className="flex items-center gap-2">
+                  <Icon size={18} />
+                  <span>{section.title}</span>
+                </div>
+                <Icons.ChevronDown size={16} className={`transform transition-transform ${isOpen ? 'rotate-180' : ''}`} />
               </div>
-            </Link>
-            <Link href="/submissions">
-              <div className={`sidebar-item ${activeItem === 'request-submissions' ? 'active' : ''}`}>
-                <span>Communication Request Submissions</span>
+
+              <div
+                className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+              >
+                <div className="pl-8 py-1">
+                  {section.items.map((item, i) => (
+                    <Link key={i} href={item.path}>
+                      <div
+                        className={`sidebar-item px-2 py-1 text-sm rounded  ${activeItem === item.name ? ' text-blue-700' : ''
+                          }`}
+                      >
+                        {item.name}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </Link>
-            <Link href="/subscribers">
-              <div className={`sidebar-item ${activeItem === 'request-subscribers' ? 'active' : ''}`}>
-                <span>Communication Request Subscribers</span>
-              </div>
-            </Link>
-            <Link href="/insight">
-              <div className={`sidebar-item ${activeItem === 'ismaili-insight' ? 'active' : ''}`}>
-                <span>Ismaili Insight</span>
-              </div>
-            </Link>
-            <Link href="/social-media">
-              <div className={`sidebar-item ${activeItem === 'social-media' ? 'active' : ''}`}>
-                <span>Social Media</span>
-              </div>
-            </Link>
-          </div>
-        )}
-        
-        <div 
-          className={`sidebar-item ${openMenus.graphics ? 'active' : ''}`}
-          onClick={() => toggleMenu('graphics')}
-        >
-          <BarChart size={18} />
-          <span className="flex-1">Graphics Request (1)</span>
-          <ChevronDown size={16} className={`transform transition-transform ${openMenus.graphics ? 'rotate-180' : ''}`} />
-        </div>
-        
-        {openMenus.graphics && (
-          <div className="pl-8">
-            <div className="sidebar-item">
-              <span>Graphics Request Submissions (1)</span>
             </div>
-          </div>
-        )}
-        
-        <div 
-          className={`sidebar-item ${openMenus.bookings ? 'active' : ''}`}
-          onClick={() => toggleMenu('bookings')}
-        >
-          <Calendar size={18} />
-          <span className="flex-1">Bookings</span>
-          <ChevronDown size={16} className={`transform transition-transform ${openMenus.bookings ? 'rotate-180' : ''}`} />
-        </div>
-        
-        {openMenus.bookings && (
-          <div className="pl-8">
-            <div className="sidebar-item">
-              <span>Bookings</span>
-            </div>
-            <div className="sidebar-item">
-              <span>Pending Bookings</span>
-            </div>
-            <div className="sidebar-item">
-              <span>Booking Comments (15)</span>
-            </div>
-            <div className="sidebar-item">
-              <span>Double Bookings</span>
-            </div>
-            <div className="sidebar-item">
-              <span>Booking Subscribers</span>
-            </div>
-          </div>
-        )}
-        
-        <div 
-          className={`sidebar-item ${openMenus.food ? 'active' : ''}`}
-          onClick={() => toggleMenu('food')}
-        >
-          <Coffee size={18} />
-          <span className="flex-1">Food Support</span>
-          <ChevronDown size={16} className={`transform transition-transform ${openMenus.food ? 'rotate-180' : ''}`} />
-        </div>
-        
-        {openMenus.food && (
-          <div className="pl-8">
-            <div className="sidebar-item">
-              <span>Food Support Dashboard</span>
-            </div>
-            <div className="sidebar-item">
-              <span>Food Support Subscribers</span>
-            </div>
-          </div>
-        )}
-        
-        <div className="sidebar-item">
-          <Book size={18} />
-          <span>Form Builder</span>
-        </div>
+          );
+        })}
       </nav>
-    </aside>
+    </aside >
   );
 }

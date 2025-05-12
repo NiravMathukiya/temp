@@ -1,5 +1,15 @@
-import Dashboard from '@/components/Dashboard';
+
+import HomePage from "@/pages/Homepage"
+import SideBarWrapper from "../layouts/SideBarWrapper";
+
 
 export default function Home() {
-  return <Dashboard />;
+  
+  return (
+    <>
+      <SideBarWrapper>
+        <HomePage />
+      </SideBarWrapper>
+    </>
+  )
 }

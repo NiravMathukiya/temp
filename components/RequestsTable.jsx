@@ -3,10 +3,62 @@
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 import { ChevronDown, Edit, File } from 'lucide-react';
+import Header from './Header';
 
-export default function RequestsTable({ requests }) {
+export default function RequestsTable() {
+
+  const requests = [
+    {
+      id: '1',
+      portfolioMember: 'Ismaili Professional Network (IPN)',
+      submittedBy: 'Katy',
+      programName: 'Tee Time & Talk',
+      email: 'amber9909@gmail.com',
+      programDate: '2023-06-01',
+      status: 'Pending',
+    },
+    {
+      id: '2',
+      portfolioMember: 'AKHB',
+      submittedBy: 'CorpusChristi, SanAntonio',
+      programName: 'International Nurses Day',
+      email: 'foorucha1@yahoo.com',
+      programDate: '2023-05-12',
+      status: 'Pending',
+    },
+    {
+      id: '3',
+      portfolioMember: 'Local Announcements',
+      submittedBy: 'CorpusChristi, SanAntonio',
+      programName: 'Translations',
+      email: 'icsw@usjj.org',
+      programDate: '2023-05-09',
+      status: 'Approved',
+    },
+    {
+      id: '4',
+      portfolioMember: 'Program',
+      submittedBy: 'Beaumont',
+      programName: 'Rites & Ceremonies COL @ BMT',
+      email: 'icsw@usjj.org',
+      programDate: '2023-05-09',
+      status: 'Approved',
+    },
+    {
+      id: '5',
+      portfolioMember: 'Mental Health',
+      submittedBy: 'CorpusChristi, SanAntonio',
+      programName: 'Mental Health Awareness',
+      email: 'zainabkhuwaja@gmail.com',
+      programDate: '2023-05-08',
+      status: 'Approved',
+    },
+  ];
+
+
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden">
+      <Header ></Header>
       <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b">
         <h2 className="text-lg font-semibold text-gray-800 flex items-center">
           <ChevronDown className="mr-2" />
@@ -16,7 +68,7 @@ export default function RequestsTable({ requests }) {
           <span className="text-blue-600 text-sm mr-4">Filter</span>
         </div>
       </div>
-      
+
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -76,10 +128,10 @@ export default function RequestsTable({ requests }) {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                    ${request.status === 'Approved' 
-                      ? 'bg-green-100 text-green-800' 
-                      : request.status === 'Pending' 
-                        ? 'bg-yellow-100 text-yellow-800' 
+                    ${request.status === 'Approved'
+                      ? 'bg-green-100 text-green-800'
+                      : request.status === 'Pending'
+                        ? 'bg-yellow-100 text-yellow-800'
                         : 'bg-red-100 text-red-800'}`}>
                     {request.status}
                   </span>
