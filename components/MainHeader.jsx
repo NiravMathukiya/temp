@@ -1,8 +1,8 @@
 'use client';
 
 import { Menu } from 'lucide-react';
+import { toggleSidebar } from '../store/slices/sidebarSlice';
 import { useDispatch } from 'react-redux';
-import { toggleSidebar } from '@/store/slices/sidebarSlice.js';
 
 const MainHeader = () => {
     const dispatch = useDispatch();

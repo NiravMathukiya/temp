@@ -1,7 +1,8 @@
 "use client"
 import React from 'react'
-import RequestsTable from "@/components/RequestsTable"
+
 import SideBarWrapper from '../../layouts/SideBarWrapper'
+import RequestsTable from '../../components/RequestsTable'
 
 const page = () => {
     return (
