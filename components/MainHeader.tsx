@@ -1,11 +1,17 @@
 'use client';
 
+import React from 'react';
 import { Menu } from 'lucide-react';
 import { toggleSidebar } from '../store/slices/sidebarSlice';
 import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store'; // Import AppDispatch from your store
 
-const MainHeader = () => {
-    const dispatch = useDispatch();
+interface MainHeaderProps {
+    // Add props if needed in the future
+}
+
+const MainHeader: React.FC<MainHeaderProps> = () => {
+    const dispatch = useDispatch < AppDispatch > ();
 
     return (
         <header className="flex items-center justify-between bg-[#EFEFEF] p-3 shadow-md w-full">

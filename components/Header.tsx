@@ -1,14 +1,27 @@
-import Link from 'next/link';
-import { Filter, Plus, Download } from 'lucide-react';
+import React from "react";
+import Link from "next/link";
+import { Filter, Plus, Download } from "lucide-react";
 
-export default function Header() {
+interface HeaderProps {
+  title?: string;
+  onFilterClick?: () => void;
+  showExportButton?: boolean;
+  // etc.
+}
+
+const Header: React.FC<HeaderProps> = () => {
   return (
     <header className="bg-white shadow">
       <div className="flex flex-wrap justify-between items-center p-4 gap-y-2">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Communication Request</h1>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Communication Request
+          </h1>
           <div className="flex items-center text-sm text-gray-500 mt-1">
-            <Link href="/" className="hover:text-primary transition-colors duration-300">
+            <Link
+              href="/"
+              className="hover:text-primary transition-colors duration-300"
+            >
               Home
             </Link>
             <span className="mx-2">&gt;</span>
@@ -18,9 +31,7 @@ export default function Header() {
 
         <div className="flex flex-wrap items-center gap-2">
           {/* Export CSV */}
-          <button
-            className="flex items-center justify-center bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 transition-colors duration-300"
-          >
+          <button className="flex items-center justify-center bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 transition-colors duration-300">
             <Download size={16} className="mr-1" />
             Export CSV
           </button>
@@ -43,9 +54,7 @@ export default function Header() {
           </Link>
 
           {/* Filter */}
-          <button
-            className="flex items-center justify-center bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors duration-300"
-          >
+          <button className="flex items-center justify-center bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors duration-300">
             <Filter size={16} className="mr-1" />
             Filter
           </button>
@@ -53,4 +62,6 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
+
+export default Header;

@@ -1,8 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, DragEvent, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import {
+  useForm,
+  FieldErrors,
+  UseFormRegister,
+  UseFormWatch,
+  UseFormSetValue,
+} from "react-hook-form";
+
 import Header from "../../../components/new-request/header";
 import GuidelinesSection from "../../../components/new-request/guidelines-section";
 import ChannelsSection from "../../../components/new-request/channels-section";
@@ -11,24 +18,94 @@ import JamatAnnouncementSection from "../../../components/new-request/jamat-anno
 import NewsletterSection from "../../../components/new-request/newsletter-section";
 import JamatkhanaSection from "../../../components/new-request/jamatkhana-section";
 import FormActions from "../../../components/new-request/form-actions";
-// import Header from "@/components/new-request/header"
-// import GuidelinesSection from "@/components/new-request/guidelines-section"
-// import ChannelsSection from "@/components/new-request/channels-section"
-// import ProgramInfoSection from "@/components/new-request/program-info-section"
-// import JamatAnnouncementSection from "@/components/new-request/jamat-announcement-section"
-// import NewsletterSection from "@/components/new-request/newsletter-section"
-// import JamatkhanaSection from "@/components/new-request/jamatkhana-section"
-// import FormActions from "@/components/new-request/form-actions"
+
+// Form input structure
+type FormData = {
+  channels: {
+    jamatAnnouncement: boolean;
+    ismailiInsight: boolean;
+    ismailiApp: boolean;
+    socialMedia: boolean;
+    graphicRequest: boolean;
+  };
+  programVenue: {
+    austin: boolean;
+    austinDowntown: boolean;
+    austinSouth: boolean;
+    beaumont: boolean;
+    houstonHq: boolean;
+    houstonPrincipal: boolean;
+    katy: boolean;
+    sanAntonio: boolean;
+    spring: boolean;
+    sugarLand: boolean;
+    clearLake: boolean;
+    collegeStation: boolean;
+    corpusChristi: boolean;
+    harvestGreen: boolean;
+  };
+  customVenues: string[];
+  jamatkhanas: {
+    acstCorpusChristi: boolean;
+    acstSanAntonio: boolean;
+    acctCollegeStation: boolean;
+    acctAustinSouth: boolean;
+    acctAustin: boolean;
+    ghClearLake: boolean;
+    ghKaty: boolean;
+    ghHeadquarters: boolean;
+    ghPrincipal: boolean;
+    ghHarvestGreen: boolean;
+    ghSugarLand: boolean;
+    ghBeaumont: boolean;
+    ghSpring: boolean;
+  };
+  firstAnnouncement: {
+    day: string;
+    month: string;
+    year: string;
+    text: string;
+  };
+  noProgramDate: boolean;
+  noProgramTime: boolean;
+  noAttendeesNumber: boolean;
+  requiresRegistration: "yes" | "no";
+  files: File[];
+  newsletterFiles: File[];
+};
+
+// Props shared with children
+type FormProps = {
+  register: UseFormRegister<FormData>;
+  errors: FieldErrors<FormData>;
+  watch: UseFormWatch<FormData>;
+  setValue: UseFormSetValue<FormData>;
+  newVenue: string;
+  setNewVenue: React.Dispatch<React.SetStateAction<string>>;
+  showInput: boolean;
+  setShowInput: React.Dispatch<React.SetStateAction<boolean>>;
+  files: File[];
+  newsletterFiles: File[];
+  handleFileDrop: (e: DragEvent<HTMLDivElement>) => void;
+  handleFileSelect: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleNewsletterFileDrop: (e: DragEvent<HTMLDivElement>) => void;
+  handleNewsletterFileSelect: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleAddVenue: (venue: string) => void;
+  watchChannels: FormData["channels"];
+  watchProgramVenue: FormData["programVenue"];
+  watchCustomVenues: string[];
+};
 
 export default function NewRequestPage() {
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     defaultValues: {
       channels: {
         jamatAnnouncement: false,
@@ -84,64 +161,60 @@ export default function NewRequestPage() {
     },
   });
 
-  // State for UI controls
-  const [newVenue, setNewVenue] = useState("");
-  const [showInput, setShowInput] = useState(false);
-  const [files, setFiles] = useState([]);
-  const [newsletterFiles, setNewsletterFiles] = useState([]);
+  const [newVenue, setNewVenue] = useState<string>("");
+  const [showInput, setShowInput] = useState<boolean>(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [newsletterFiles, setNewsletterFiles] = useState<File[]>([]);
 
-  // Watch for selected channels to show/hide sections
   const watchChannels = watch("channels");
   const watchProgramVenue = watch("programVenue");
   const watchCustomVenues = watch("customVenues");
 
   const handleAddVenue = (venue: string) => {
     if (venue.trim()) {
-      // Add the new venue to the list
       const updatedVenues = [...watchCustomVenues, venue];
-      setValue("customVenues", updatedVenues);  
-      setNewVenue(""); // Clear the input after adding
-      setShowInput(false); // Hide input after adding the venue
+      setValue("customVenues", updatedVenues);
+      setNewVenue("");
+      setShowInput(false);
     }
   };
 
-  const handleFileDrop = (e) => {
+  const handleFileDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const droppedFiles = e.dataTransfer.files;
+    const droppedFiles = Array.from(e.dataTransfer.files);
     const updatedFiles = [...files, ...droppedFiles];
     setFiles(updatedFiles);
     setValue("files", updatedFiles);
   };
 
-  const handleFileSelect = (e) => {
-    const selectedFiles = e.target.files;
+  const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files || []);
     const updatedFiles = [...files, ...selectedFiles];
     setFiles(updatedFiles);
     setValue("files", updatedFiles);
   };
 
-  const handleNewsletterFileDrop = (e) => {
+  const handleNewsletterFileDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const droppedFiles = e.dataTransfer.files;
+    const droppedFiles = Array.from(e.dataTransfer.files);
     const updatedFiles = [...newsletterFiles, ...droppedFiles];
     setNewsletterFiles(updatedFiles);
     setValue("newsletterFiles", updatedFiles);
   };
 
-  const handleNewsletterFileSelect = (e) => {
-    const selectedFiles = e.target.files;
+  const handleNewsletterFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files || []);
     const updatedFiles = [...newsletterFiles, ...selectedFiles];
     setNewsletterFiles(updatedFiles);
     setValue("newsletterFiles", updatedFiles);
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormData) => {
     try {
-      // Combine all form data
-      const formData = {
+      const formData: FormData = {
         ...data,
-        files: files, // Add files from state
-        newsletterFiles: newsletterFiles,
+        files,
+        newsletterFiles,
       };
 
       console.log("Complete form data:", formData);
@@ -153,8 +226,7 @@ export default function NewRequestPage() {
     }
   };
 
-  // Form props to pass to child components
-  const formProps = {
+  const formProps: FormProps = {
     register,
     errors,
     watch,
@@ -175,7 +247,7 @@ export default function NewRequestPage() {
     watchCustomVenues,
   };
 
-  const guidLines: Array<string> = [
+  const guidelines: string[] = [
     "All submissions for communications to the Southwestern Jamat must be made through the Southwest Communications Portal.",
     "Please note that only one announcement per Friday is allowed. For additional announcement requests, please contact the Council Secretariat.",
     "The Council Secretariat and Institutional Communications Portfolio reserves the right to modify any submissions to align with the Council and The Ismaili Digital Communication Guidelines.",
@@ -187,23 +259,18 @@ export default function NewRequestPage() {
       <Header />
 
       <main className="md:mx-auto rounded-2xl py-8 px-4">
-        <GuidelinesSection guidelines={guidLines} />
+        <GuidelinesSection guidelines={guidelines} />
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           <ChannelsSection formProps={formProps} />
-
           <ProgramInfoSection formProps={formProps} />
-
           {watchChannels?.jamatAnnouncement && (
             <JamatAnnouncementSection formProps={formProps} />
           )}
-
           {watchChannels?.ismailiInsight && (
             <NewsletterSection formProps={formProps} />
           )}
-
           <JamatkhanaSection formProps={formProps} />
-
           <FormActions router={router} />
         </form>
       </main>

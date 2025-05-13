@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/new-request/jamatkhana-section.tsx"  ],
   "exclude": [
     "node_modules"
   ]
